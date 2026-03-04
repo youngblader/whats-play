@@ -1,0 +1,23 @@
+import { FC, memo } from 'react';
+import { Path, Svg } from 'react-native-svg';
+
+import { Colors } from '@shared/theme';
+
+import { IconProps } from '../iconTypes';
+
+const boxWidth = 24;
+const boxHeight = 24;
+const ratio = boxHeight / boxWidth;
+
+export const SearchIcon: FC<IconProps> = memo(function SearchIcon({ color = Colors.white, size = boxWidth, style }) {
+  return (
+    <Svg style={style} width={size} height={size * ratio} viewBox="0 0 24 24" fill="none">
+      <Path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M19.5 9.75C19.5 4.36522 15.1348 0 9.75 0C4.36522 0 0 4.36522 0 9.75C0 15.1348 4.36522 19.5 9.75 19.5C12.1726 19.5 14.3888 18.6164 16.094 17.154L22.0836 23.1443L22.1677 23.2169C22.4614 23.4348 22.878 23.4106 23.1443 23.1443C23.4372 22.8514 23.4372 22.3765 23.1443 22.0836L17.154 16.094C18.6164 14.3888 19.5 12.1726 19.5 9.75ZM1.5 9.75C1.5 5.19365 5.19365 1.5 9.75 1.5C14.3063 1.5 18 5.19365 18 9.75C18 14.3063 14.3063 18 9.75 18C5.19365 18 1.5 14.3063 1.5 9.75Z"
+        fill={color}
+      />
+    </Svg>
+  );
+});

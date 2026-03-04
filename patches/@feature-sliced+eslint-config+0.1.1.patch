@@ -1,0 +1,41 @@
+diff --git a/node_modules/@feature-sliced/eslint-config/rules/layers-slices/index.js b/node_modules/@feature-sliced/eslint-config/rules/layers-slices/index.js
+index ee72d41..48c64da 100644
+--- a/node_modules/@feature-sliced/eslint-config/rules/layers-slices/index.js
++++ b/node_modules/@feature-sliced/eslint-config/rules/layers-slices/index.js
+@@ -14,13 +14,21 @@ const slicelessLayerRules = [
+     {
+         from: "app",
+         allow: "app",
+-    }
++    },
++    {
++      from: "entities",
++      allow: "entities",
++    },
++    {
++      from: "shared",
++      allow: "entities",
++    },
+ ];
+ 
+ const getLayersBoundariesElements = () =>
+     layersLib.FS_LAYERS.map((layer) => ({
+         type: layer,
+-        pattern: `${layer}/!(_*){,/*}`,
++        pattern: `${layer}`,
+         mode: "folder",
+         capture: ["slices"],
+     }));
+diff --git a/node_modules/@feature-sliced/eslint-config/utils/layers.js b/node_modules/@feature-sliced/eslint-config/utils/layers.js
+index 7e6df34..cb0bb2a 100644
+--- a/node_modules/@feature-sliced/eslint-config/utils/layers.js
++++ b/node_modules/@feature-sliced/eslint-config/utils/layers.js
+@@ -1,7 +1,7 @@
+ const FS_LAYERS = [
+     "app",
+     "processes",
+-    "pages",
++    "screens",
+     "widgets",
+     "features",
+     "entities",
