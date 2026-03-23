@@ -27,7 +27,7 @@ export const Genres: FC<Props> = ({ genres }) => {
 
   return (
     <View>
-      <SectionDivider title={'Developers'} onPress={presentDevelopers} />
+      <SectionDivider title={'Genres'} onPress={presentDevelopers} />
       <FlatList
         horizontal
         data={genres}

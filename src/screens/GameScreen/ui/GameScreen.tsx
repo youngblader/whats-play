@@ -6,103 +6,107 @@ import { StyleSheet } from 'react-native-unistyles';
 
 import { GamesSection } from '@widgets/games-section';
 import { AddWishlist } from '@features/add-wishlist';
+import { ShareGame } from '@features/share-game';
 import { StoreTag } from '@entities/stores';
+import { AppLayout } from '@shared/layout';
 import { Colors, globalStyles } from '@shared/theme';
 import { AppText, LoadingIndicator } from '@shared/ui';
 
 import { useGame } from '../hooks/useGame';
 
 export const GameScreen: FC = () => {
-  const { data, games, isGoodMetascore, isLoading } = useGame();
+  const { data, title, games, isGoodMetascore, isLoading } = useGame();
 
   return (
-    <View style={globalStyles.flex}>
-      {isLoading ? (
-        <LoadingIndicator />
-      ) : (
-        <Animated.View entering={FadeIn.duration(450)}>
-          <ScrollView>
-            <View style={globalStyles.pb40}>
-              <FastImage style={styles.image} source={{ uri: data?.background_image }} />
+    <AppLayout withNavigate title={title} rightElement={data?.website ? <ShareGame game={data} /> : null}>
+      <View style={globalStyles.flex}>
+        {isLoading ? (
+          <LoadingIndicator />
+        ) : (
+          <Animated.View entering={FadeIn.duration(450)}>
+            <ScrollView>
+              <View style={globalStyles.pb40}>
+                <FastImage style={styles.image} source={{ uri: data?.background_image }} />
 
-              <View style={globalStyles.mt20}>
-                <View style={styles.nameContainer}>
-                  <View style={styles.nameContent}>
-                    <AppText size={20} numberOfLines={2}>
-                      {data?.name}
-                    </AppText>
+                <View style={globalStyles.mt20}>
+                  <View style={styles.nameContainer}>
+                    <View style={styles.nameContent}>
+                      <AppText size={20} numberOfLines={2}>
+                        {data?.name}
+                      </AppText>
 
-                    {!!data?.publishers && (
-                      <View style={styles.row}>
-                        {data?.publishers.map((el) => (
-                          <AppText key={el?.id} color={Colors.gray}>
-                            {el.name}
-                          </AppText>
+                      {!!data?.publishers && (
+                        <View style={styles.row}>
+                          {data?.publishers.map((el) => (
+                            <AppText key={el?.id} color={Colors.gray}>
+                              {el.name}
+                            </AppText>
+                          ))}
+                        </View>
+                      )}
+                    </View>
+
+                    <AddWishlist game={data} />
+                  </View>
+
+                  {!!data?.description_raw?.length && (
+                    <View style={styles.section}>
+                      <AppText>{data?.description_raw}</AppText>
+                    </View>
+                  )}
+
+                  {!!data?.platforms?.length && (
+                    <View style={styles.section}>
+                      <AppText size={20}>Platforms</AppText>
+
+                      <View style={styles.platforms}>
+                        {data?.platforms?.map((el) => (
+                          <AppText key={el?.platform?.id}>{el?.platform.name}</AppText>
                         ))}
                       </View>
-                    )}
-                  </View>
-
-                  <AddWishlist game={data} />
-                </View>
-
-                {!!data?.description_raw?.length && (
-                  <View style={styles.section}>
-                    <AppText>{data?.description_raw}</AppText>
-                  </View>
-                )}
-
-                {!!data?.platforms?.length && (
-                  <View style={styles.section}>
-                    <AppText size={20}>Platforms</AppText>
-
-                    <View style={styles.platforms}>
-                      {data?.platforms?.map((el) => (
-                        <AppText key={el?.platform?.id}>{el?.platform.name}</AppText>
-                      ))}
                     </View>
-                  </View>
-                )}
+                  )}
 
-                {data?.metacritic && (
-                  <View style={styles.metascoreContainer}>
-                    <AppText size={20}>Metascore</AppText>
-                    <View style={styles.metascore(isGoodMetascore)}>
-                      <AppText size={12} color={isGoodMetascore ? Colors.green : Colors.orange}>
-                        {data?.metacritic}
+                  {data?.metacritic && (
+                    <View style={styles.metascoreContainer}>
+                      <AppText size={20}>Metascore</AppText>
+                      <View style={styles.metascore(isGoodMetascore)}>
+                        <AppText size={12} color={isGoodMetascore ? Colors.green : Colors.orange}>
+                          {data?.metacritic}
+                        </AppText>
+                      </View>
+                    </View>
+                  )}
+
+                  {data?.released && (
+                    <View style={styles.released}>
+                      <AppText size={20}>Release date</AppText>
+                      <AppText>{data?.released}</AppText>
+                    </View>
+                  )}
+
+                  {!!data?.stores?.length && (
+                    <View style={globalStyles.mt20}>
+                      <AppText style={globalStyles.ph16} size={20} weight={'500'}>
+                        Where to buy
                       </AppText>
+
+                      <View style={styles.stores}>
+                        {data?.stores.map((el) => (
+                          <StoreTag key={el?.id} name={el?.store?.name} />
+                        ))}
+                      </View>
                     </View>
-                  </View>
-                )}
+                  )}
 
-                {data?.released && (
-                  <View style={styles.released}>
-                    <AppText size={20}>Release date</AppText>
-                    <AppText>{data?.released}</AppText>
-                  </View>
-                )}
-
-                {!!data?.stores?.length && (
-                  <View style={globalStyles.mt20}>
-                    <AppText style={globalStyles.ph16} size={20} weight={'500'}>
-                      Where to buy
-                    </AppText>
-
-                    <View style={styles.stores}>
-                      {data?.stores.map((el) => (
-                        <StoreTag key={el?.id} name={el?.store?.name} />
-                      ))}
-                    </View>
-                  </View>
-                )}
-
-                {!!games?.length && <GamesSection sectionTitle={'Similar Games'} data={games} />}
+                  {!!games?.length && <GamesSection sectionTitle={'Similar Games'} data={games} />}
+                </View>
               </View>
-            </View>
-          </ScrollView>
-        </Animated.View>
-      )}
-    </View>
+            </ScrollView>
+          </Animated.View>
+        )}
+      </View>
+    </AppLayout>
   );
 };
 

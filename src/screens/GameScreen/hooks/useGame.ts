@@ -22,10 +22,10 @@ export const useGame = () => {
   const isGoodMetascore = useMemo(() => data?.metacritic != null && data.metacritic >= 85, [data?.metacritic]);
 
   return {
+    data,
     games: games?.results,
     title: params?.title,
     isGoodMetascore: isGoodMetascore,
-    data,
     isLoading: isGameLoading || isCoomingLoading,
   };
 };

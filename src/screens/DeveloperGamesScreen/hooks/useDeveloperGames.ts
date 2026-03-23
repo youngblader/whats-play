@@ -13,15 +13,17 @@ export const useDevelopersGames = () => {
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useInfiniteQuery({
     queryKey: [QUERYKEY, developer],
-    queryFn: ({ pageParam = 1 }) => GamesApi.getGamesDevelopers(pageParam, 10, params?.developer),
+    queryFn: ({ pageParam = 1 }) => GamesApi.getGamesDevelopers(pageParam, 10, developer),
     initialPageParam: 1,
     getNextPageParam: (lastPage, pages) => {
       if (!lastPage.next) return undefined;
       return pages.length + 1;
     },
+    select: (d) => ({
+      pages: [...d.pages.flatMap((p) => p.results)],
+      pageParams: [...d.pageParams],
+    }),
   });
-
-  const games = data?.pages.flatMap((p) => p.results) ?? [];
 
   const onEndReached = () => {
     if (hasNextPage && !isFetchingNextPage) {
@@ -34,10 +36,9 @@ export const useDevelopersGames = () => {
   };
 
   return {
-    title: params?.developer,
-    games,
+    title: developer,
+    games: data?.pages,
     isLoading,
-    isFetchingNextPage,
     onEndReached,
     presentGame,
   };

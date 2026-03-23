@@ -16,6 +16,10 @@ export const useGenres = () => {
       if (!lastPage.next) return undefined;
       return pages.length + 1;
     },
+    select: (d) => ({
+      pages: [...d.pages.flatMap((p) => p.results)],
+      pageParams: [...d.pageParams],
+    }),
   });
 
   const onEndReached = () => {
@@ -24,11 +28,9 @@ export const useGenres = () => {
     }
   };
 
-  const genres = data?.pages.flatMap((p) => p.results);
-
   const presentGenreGames = (genre: Genre) => {
     navigation.navigate('GenreGames', { genre });
   };
 
-  return { data: genres, isLoading, isFetchingNextPage, onEndReached, presentGenreGames };
+  return { data: data?.pages, isLoading, onEndReached, presentGenreGames };
 };

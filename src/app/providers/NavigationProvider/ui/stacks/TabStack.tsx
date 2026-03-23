@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unstable-nested-components */
 import { FC } from 'react';
 import { BottomTabNavigationOptions, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 

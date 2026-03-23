@@ -39,6 +39,7 @@ export const useGenreGames = () => {
 
   return {
     games: data?.results,
+    title: params?.genre?.name,
     listRef,
     scrollY,
     presentGame,

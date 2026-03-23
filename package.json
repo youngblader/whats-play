@@ -4,11 +4,10 @@
   "private": true,
   "scripts": {
     "start": "react-native start",
-    "ios": "react-native run-ios",
+    "ios": "react-native run-ios --simulator=\"iPhone 16\"",
     "android": "react-native run-android",
-    "ios-16": "react-native run-ios --simulator=\"iPhone 16\"",
     "lint": "eslint .",
-    "reset-cache": "npx react-native start --reset-cache",
+    "reset": "npx react-native start --reset-cache",
     "postinstall": "patch-package"
   },
   "dependencies": {

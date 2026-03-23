@@ -7,6 +7,7 @@ import { FlashList, ListRenderItemInfo } from '@shopify/flash-list';
 
 import { Game, GameItem } from '@entities/games';
 import { SearchIcon } from '@shared/icons';
+import { AppLayout } from '@shared/layout';
 import { Colors, utilsStyles } from '@shared/theme';
 import { LoadingIndicator } from '@shared/ui';
 
@@ -22,7 +23,7 @@ export const SearchScreen: FC = () => {
   );
 
   return (
-    <View style={styles.container}>
+    <AppLayout title={'Search'}>
       <View style={styles.inputContainer}>
         <SearchIcon size={16} />
         <TextInput
@@ -42,16 +43,13 @@ export const SearchScreen: FC = () => {
         ItemSeparatorComponent={ItemSeparatorComponent}
         keyboardDismissMode={'on-drag'}
       />
-    </View>
+    </AppLayout>
   );
 };
 
 const ItemSeparatorComponent: FC = () => <View style={utilsStyles.separator} />;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   list: {
     flexGrow: 1,
     marginTop: 20,

@@ -1,5 +1,3 @@
-import { useMemo } from 'react';
-
 import { useInfiniteQuery } from '@tanstack/react-query';
 
 import { Developer, DeveloperApi } from '@entities/developer';
@@ -18,6 +16,10 @@ export const useDevelopers = () => {
       if (!lastPage.next) return undefined;
       return pages.length + 1;
     },
+    select: (d) => ({
+      pages: [...d.pages.flatMap((p) => p.results)],
+      pageParams: [...d.pageParams],
+    }),
   });
 
   const onEndReached = () => {
@@ -26,16 +28,13 @@ export const useDevelopers = () => {
     }
   };
 
-  const developers = useMemo(() => data?.pages.flatMap((p) => p.results), [data]);
-
   const presentDeveloperGames = (developer: Developer) => {
     navigation.navigate('DeveloperGames', { developer: developer.slug });
   };
 
   return {
-    data: developers,
+    data: data?.pages,
     isLoading,
-    isFetchingNextPage,
     onEndReached,
     presentDeveloperGames,
   };

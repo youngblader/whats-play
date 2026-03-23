@@ -6,6 +6,7 @@ import { StyleSheet } from 'react-native-unistyles';
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list';
 
 import { Game, GameItem } from '@entities/games';
+import { AppLayout } from '@shared/layout';
 
 import { useWishlist } from '../hooks/useWishlist';
 
@@ -15,14 +16,16 @@ export const WishlistScreen: FC = () => {
   const renderItem = ({ item }: ListRenderItemInfo<Game>) => <GameItem {...item} onPress={() => presentGame(item)} />;
 
   return (
-    <Animated.View style={styles.container} entering={FadeInDown.duration(450)}>
-      <FlashList
-        data={games}
-        renderItem={renderItem}
-        contentContainerStyle={styles.list}
-        ItemSeparatorComponent={ItemSeparatorComponent}
-      />
-    </Animated.View>
+    <AppLayout title="Wishlist">
+      <Animated.View style={styles.container} entering={FadeInDown.duration(450)}>
+        <FlashList
+          data={games}
+          renderItem={renderItem}
+          contentContainerStyle={styles.list}
+          ItemSeparatorComponent={ItemSeparatorComponent}
+        />
+      </Animated.View>
+    </AppLayout>
   );
 };
 

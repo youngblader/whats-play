@@ -6,6 +6,7 @@ import { Developers } from '@widgets/developers';
 import { GamesPreviews } from '@widgets/games-preview';
 import { Genres } from '@widgets/genres';
 import { Game, GameItem } from '@entities/games';
+import { AppLayout } from '@shared/layout';
 import { globalStyles, utilsStyles } from '@shared/theme';
 import { LoadingIndicator, SectionDivider } from '@shared/ui';
 
@@ -29,7 +30,7 @@ export const MainScreen: FC = () => {
   );
 
   return (
-    <View style={globalStyles.flex}>
+    <AppLayout>
       {isLoading ? (
         <LoadingIndicator />
       ) : (
@@ -45,12 +46,11 @@ export const MainScreen: FC = () => {
           />
         </Animated.View>
       )}
-    </View>
+    </AppLayout>
   );
 };
 
-const renderSectionHeader = ({ section }: { section: { title: string; data: Game[] } }) => (
-  <SectionDivider title={section?.title} />
-);
+const renderSectionHeader = ({ section }: { section: { title: string; data: Game[] } }) =>
+  section.data?.length > 0 ? <SectionDivider title={section?.title} /> : null;
 
 const ItemSeparatorComponent: FC = () => <View style={utilsStyles.separator} />;

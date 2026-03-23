@@ -9,17 +9,11 @@ import { LoadingIndicator } from '@shared/ui';
 import { useGenres } from '../hooks/useGenres';
 
 export const GenresScreen: FC = () => {
-  const { data, isLoading, isFetchingNextPage, onEndReached, presentGenreGames } = useGenres();
+  const { data, isLoading, onEndReached, presentGenreGames } = useGenres();
 
   const renderItem = ({ item }: ListRenderItemInfo<Genre>) => (
     <GenreRowItem {...item} onPress={() => presentGenreGames(item)} />
   );
-
-  const ListFooterComponent = isFetchingNextPage ? (
-    <View style={globalStyles.mv20}>
-      <LoadingIndicator />
-    </View>
-  ) : null;
 
   return (
     <View style={globalStyles.flex}>
@@ -31,10 +25,9 @@ export const GenresScreen: FC = () => {
           numColumns={2}
           renderItem={renderItem}
           onEndReached={onEndReached}
-          onEndReachedThreshold={0.2}
+          onEndReachedThreshold={0.5}
           contentContainerStyle={styles.list}
           columnWrapperStyle={styles.row}
-          ListFooterComponent={ListFooterComponent}
         />
       )}
     </View>

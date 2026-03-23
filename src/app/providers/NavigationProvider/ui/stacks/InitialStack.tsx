@@ -13,7 +13,7 @@ export const InitialStack: FC = () => {
   return (
     <Stack.Navigator screenOptions={screenOptions} initialRouteName={AppRoutes.Welcome}>
       {InitialNavigationRoutes.map(({ name, component }) => {
-        return <Stack.Screen name={name} component={component} key={name} options={{ headerShown: false }} />;
+        return <Stack.Screen name={name} component={component} key={name} />;
       })}
     </Stack.Navigator>
   );

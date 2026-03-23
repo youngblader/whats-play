@@ -1,28 +1,23 @@
 import { FC } from 'react';
-import { FlatList, ListRenderItemInfo, View } from 'react-native';
+import { FlatList, ListRenderItemInfo } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 
 import { Developer, DeveloperRowItem } from '@entities/developer';
-import { globalStyles, utilsStyles } from '@shared/theme';
+import { AppLayout } from '@shared/layout';
+import { utilsStyles } from '@shared/theme';
 import { LoadingIndicator } from '@shared/ui';
 
 import { useDevelopers } from '../hooks/useDevelopers';
 
 export const DevelopersScreen: FC = () => {
-  const { data, isLoading, isFetchingNextPage, onEndReached, presentDeveloperGames } = useDevelopers();
+  const { data, isLoading, onEndReached, presentDeveloperGames } = useDevelopers();
 
   const renderItem = ({ item }: ListRenderItemInfo<Developer>) => (
     <DeveloperRowItem {...item} onPress={() => presentDeveloperGames(item)} />
   );
 
-  const ListFooterComponent = isFetchingNextPage ? (
-    <View style={globalStyles.mv20}>
-      <LoadingIndicator />
-    </View>
-  ) : null;
-
   return (
-    <View style={globalStyles.flex}>
+    <AppLayout title={'Developers'}>
       {isLoading ? (
         <LoadingIndicator />
       ) : (
@@ -30,14 +25,13 @@ export const DevelopersScreen: FC = () => {
           data={data}
           numColumns={2}
           renderItem={renderItem}
-          onEndReachedThreshold={0.2}
+          onEndReachedThreshold={0.5}
           onEndReached={onEndReached}
           contentContainerStyle={utilsStyles.list}
           columnWrapperStyle={styles.row}
-          ListFooterComponent={ListFooterComponent}
         />
       )}
-    </View>
+    </AppLayout>
   );
 };
 
