@@ -6,3 +6,4 @@ export { HeartIcon } from './svg/HeartIcon';
 export { HeartTabIcon } from './svg/HeartTabIcon';
 export { MainIcon } from './svg/MainIcon';
 export { SearchIcon } from './svg/SearchIcon';
+export { ShareIcon } from './svg/ShareIcon';
